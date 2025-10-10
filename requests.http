@@ -6,14 +6,17 @@ GET http://localhost:8080/movies
 ###
 GET http://localhost:8080/movies/1
 ###
+GET http://localhost:8080/movies?title=the social network
+###
 POST http://localhost:8080/movies
 Content-Type: application/json
 
 {
-  "id": 1,
   "title": "the social network",
   "description": "facebook",
   "year": "2010",
   "director": "david fincher",
   "rating": 2
 }
+###
+DELETE http://localhost:8080/movies/1
