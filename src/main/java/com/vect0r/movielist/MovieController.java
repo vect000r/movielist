@@ -1,6 +1,7 @@
 package com.vect0r.movielist;
 
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,14 @@ public class MovieController {
     }
 
     @GetMapping("{id}")
-    public Movie findById(@PathVariable Integer id) {
-        return movieService.getMovieById(id);
+    public ResponseEntity<Movie> findById(@PathVariable Integer id) {
+        Movie movie = movieService.getMovieById(id);
+
+        if (movie == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(movie);
     }
 
     @GetMapping
@@ -35,6 +42,15 @@ public class MovieController {
     }
 
     @DeleteMapping("{id}")
-    public void deleteMovie(@PathVariable Integer id) { movieService.deleteMovie(id); }
+    public ResponseEntity<Void> deleteMovie(@PathVariable Integer id) {
+        Movie movie = movieService.getMovieById(id);
+
+        if (movie == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        movieService.deleteMovie(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }
